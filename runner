@@ -1,0 +1,27 @@
+#!/bin/bash
+set -Ceux
+
+ARGS=${@:2}
+
+case $1 in
+"init")
+  ./runner build
+  ./runner start
+;;
+"build")
+  docker build .
+;;
+# build hash required
+"start")
+  docker run -p 0.0.0.0:80:80 $ARGS
+;;
+"down")
+ docker ps
+ echo "Enter container id:"
+  read CONTAINER_ID
+  docker stop $CONTAINER_ID
+;;
+*)
+  echo Unexptected command: $1
+;;
+esac
